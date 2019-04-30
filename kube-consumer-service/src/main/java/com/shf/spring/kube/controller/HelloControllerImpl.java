@@ -5,14 +5,12 @@ import com.shf.spring.kube.feign.producer.ProducerClient;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
  * @author songhaifeng
  */
 @RestController
-@RequestMapping(consumes = "application/json;v1")
 @Slf4j
 public class HelloControllerImpl implements HelloService {
 
