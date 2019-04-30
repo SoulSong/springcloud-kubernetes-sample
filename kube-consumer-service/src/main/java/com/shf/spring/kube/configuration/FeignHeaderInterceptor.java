@@ -2,7 +2,7 @@ package com.shf.spring.kube.configuration;
 
 import feign.RequestInterceptor;
 import feign.RequestTemplate;
-import org.springframework.context.annotation.Configuration;
+import org.springframework.stereotype.Component;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
@@ -15,7 +15,7 @@ import java.util.Enumeration;
  * @Author: songhaifeng
  * @Date: 2019/4/27 02:33
  */
-@Configuration
+@Component
 public class FeignHeaderInterceptor implements RequestInterceptor {
 
     @Override
