@@ -1,14 +1,16 @@
 # Introduction
 Builds on [springboot-kubernetes-sample](https://github.com/SoulSong/springboot-kubernetes-sample) project, 
-integrate `spring-cloud-feign` with `spring-cloud-ribbon` to config `ribbon.listOfServers` for feign without discovery.  
+integrate `spring-cloud-feign` with `spring-cloud-ribbon` to config `ribbon.listOfServers` for feign-clients without discovery.  
 
 ##Add feature list:
+* spring-cloud-openfeign
 * spring-cloud-ribbon
-* spring-cloud-feign
 * okHttp3
 * swagger
-* custom header for api-version
-* add FeignHeaderInterceptor for throughing http-headers into the downstream service
+* spring-cloud-gateway
+* Custom header for api-version
+* Add FeignHeaderInterceptor for throughing http-headers into the downstream service
+* Aggregate all services' swagger config into gateway-service
 
 # How To Build & Deploy
 ```bash
@@ -19,12 +21,45 @@ More information can forward to [REAMDE.md](https://github.com/SoulSong/springbo
 
 # How To Test
 ## dev
+### direct request consumer-service
 ```text
 curl -H "Content-Type:application/json-v1" -H "token:123" localhost:8081/hello/call/producer-service
 ```
 
-## k8s
+### request consumer-service by gateway-service
 ```text
-curl -H "Content-Type:application/json-v1" -H "token:123" shf.boot.com/hello/consumer-service/call/producer-service
+curl -H "Content-Type:application/json-v1" -H "token:123" localhost:9999/consumer-service/hello/call/producer-service
 ```
 
+## k8s
+### direct request consumer-service
+```text
+curl -H "Content-Type:application/json-v1" -H "token:123" shf.boot.com/consumer-service/hello/call/producer-service
+```
+
+### request consumer-service by gateway-service
+```text
+curl -H "Content-Type:application/json-v1" -H "token:123" shf.boot.com/gateway-service/consumer-service/hello/call/producer-service
+```
+
+# How To Use Swagger
+## dev
+### consumer-service
+```text
+http://127.0.0.1:8081/swagger-ui.html
+```
+![avatar](./doc/img/dev-consumer-swagger.jpg)
+
+### producer-service
+```text
+http://127.0.0.1:8080/swagger-ui.html
+```
+![avatar](./doc/img/dev-producer-swagger.jpg)
+
+## k8s
+### gateway-service
+Aggregate all swagger info for all services.
+```text
+http://shf.boot.com/gateway-service/swagger-ui.html
+```
+![avatar](./doc/img/k8s-gateway-swagger.jpg)

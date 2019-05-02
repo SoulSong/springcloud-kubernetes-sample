@@ -18,3 +18,7 @@ spec:
             backend:
               serviceName: consumer-service-svc
               servicePort: 80
+          - path: /gateway-service/?(.*)
+            backend:
+                serviceName: gateway-service-svc
+                servicePort: 80

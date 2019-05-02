@@ -6,6 +6,8 @@ import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.cloud.openfeign.EnableFeignClients;
 
 /**
+ * Consumer-service
+ *
  * @author songhaifeng
  */
 @SpringBootApplication

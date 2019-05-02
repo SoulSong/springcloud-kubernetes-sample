@@ -1,4 +1,4 @@
-package com.shf.spring.kube.configuration;
+package com.shf.spring.kube.feign;
 
 import feign.RequestInterceptor;
 import feign.RequestTemplate;

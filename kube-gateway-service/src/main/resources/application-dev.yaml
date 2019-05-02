@@ -1,0 +1,17 @@
+spring:
+  cloud:
+    gateway:
+      routes:
+        - id: consumer-service
+          uri: http://127.0.0.1:8081
+          predicates:
+            - Path=/consumer-service/**
+          filters:
+            # ignore path, no context-path defined in consumer-service
+            - RewritePath=/consumer-service/(?<segment>.*), /$\{segment}
+        - id: producer-service
+          uri: http://127.0.0.1:8080
+          predicates:
+            - Path=/producer-service/**
+          filters:
+            - RewritePath=/producer-service/(?<segment>.*), /$\{segment}

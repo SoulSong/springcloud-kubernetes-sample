@@ -8,8 +8,7 @@
         <version>Develop</version>
         <relativePath>../kube-dependency</relativePath>
     </parent>
-
-    <artifactId>kube-consumer-service</artifactId>
+    <artifactId>kube-gateway-service</artifactId>
     <packaging>jar</packaging>
     <modelVersion>4.0.0</modelVersion>
 
@@ -21,38 +20,8 @@
     <dependencies>
 
         <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-actuator</artifactId>
-        </dependency>
-
-        <dependency>
             <groupId>org.springframework.cloud</groupId>
-            <artifactId>spring-cloud-starter-openfeign</artifactId>
-        </dependency>
-
-        <dependency>
-            <groupId>org.springframework.cloud</groupId>
-            <artifactId>spring-cloud-starter-netflix-ribbon</artifactId>
-        </dependency>
-
-        <dependency>
-            <groupId>com.shf.spring.kube</groupId>
-            <artifactId>kube-common</artifactId>
-        </dependency>
-
-        <dependency>
-            <groupId>com.shf.spring.kube</groupId>
-            <artifactId>kube-consumer-client</artifactId>
-        </dependency>
-
-        <dependency>
-            <groupId>com.shf.spring.kube</groupId>
-            <artifactId>kube-producer-client</artifactId>
-        </dependency>
-
-        <dependency>
-            <groupId>io.github.openfeign</groupId>
-            <artifactId>feign-okhttp</artifactId>
+            <artifactId>spring-cloud-starter-gateway</artifactId>
         </dependency>
 
         <dependency>
@@ -69,10 +38,10 @@
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
         </dependency>
+
     </dependencies>
 
     <build>
-
         <plugins>
 
             <plugin>
@@ -136,5 +105,4 @@
             </build>
         </profile>
     </profiles>
-
 </project>
