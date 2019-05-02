@@ -39,23 +39,25 @@ More information can forward to [REAMDE.md](https://github.com/SoulSong/springbo
 
 # How To Test
 ## dev
-### request consumer-service directly
+
+- request consumer-service directly
 ```text
 curl -H "Content-Type:application/json-v1" -H "token:123" localhost:8081/hello/call/producer-service
 ```
 
-### request consumer-service by gateway-service
+- request consumer-service by gateway-service
 ```text
 curl -H "Content-Type:application/json-v1" -H "token:123" localhost:9999/consumer-service/hello/call/producer-service
 ```
 
 ## k8s
-### request consumer-service directly
+
+- request consumer-service directly
 ```text
 curl -H "Content-Type:application/json-v1" -H "token:123" shf.boot.com/consumer-service/hello/call/producer-service
 ```
 
-### request consumer-service by gateway-service
+- request consumer-service by gateway-service
 ```text
 curl -H "Content-Type:application/json-v1" -H "token:123" shf.boot.com/gateway-service/consumer-service/hello/call/producer-service
 ```
@@ -63,20 +65,21 @@ curl -H "Content-Type:application/json-v1" -H "token:123" shf.boot.com/gateway-s
 
 # How To Use Swagger
 ## dev
-### consumer-service
+- consumer-service
 ```text
 http://127.0.0.1:8081/swagger-ui.html
 ```
 ![avatar](./doc/img/dev-consumer-swagger.jpg)
 
-### producer-service
+- producer-service
 ```text
 http://127.0.0.1:8080/swagger-ui.html
 ```
 ![avatar](./doc/img/dev-producer-swagger.jpg)
 
 ## k8s
-### gateway-service
+- gateway-service
+
 Aggregate all swagger info for all services.
 ```text
 http://shf.boot.com/gateway-service/swagger-ui.html
