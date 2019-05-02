@@ -28,6 +28,7 @@ Integrate openfeign with spring-cloud-kubernetes-ribbon.
 * Add FeignHeaderInterceptor for throughing http-headers into the downstream service
 * Aggregate all services' swagger config into gateway-service
 
+
 # How To Build & Deploy
 ```bash
 mvn clean install -P k8s
@@ -35,9 +36,10 @@ cd kubernetes && kubectl apply -f .
 ```
 More information can forward to [REAMDE.md](https://github.com/SoulSong/springboot-kubernetes-sample/blob/master/README.md) for detail description of building&deploying and so on. 
 
+
 # How To Test
 ## dev
-### direct request consumer-service
+### request consumer-service directly
 ```text
 curl -H "Content-Type:application/json-v1" -H "token:123" localhost:8081/hello/call/producer-service
 ```
@@ -48,7 +50,7 @@ curl -H "Content-Type:application/json-v1" -H "token:123" localhost:9999/consume
 ```
 
 ## k8s
-### direct request consumer-service
+### request consumer-service directly
 ```text
 curl -H "Content-Type:application/json-v1" -H "token:123" shf.boot.com/consumer-service/hello/call/producer-service
 ```
@@ -57,6 +59,7 @@ curl -H "Content-Type:application/json-v1" -H "token:123" shf.boot.com/consumer-
 ```text
 curl -H "Content-Type:application/json-v1" -H "token:123" shf.boot.com/gateway-service/consumer-service/hello/call/producer-service
 ```
+
 
 # How To Use Swagger
 ## dev
