@@ -1,7 +1,22 @@
 # Introduction
-Builds on [springboot-kubernetes-sample](https://github.com/SoulSong/springboot-kubernetes-sample) project, 
+A spring-cloud-kubernetes sample project builds on [springboot-kubernetes-sample](https://github.com/SoulSong/springboot-kubernetes-sample) project.
 
-##Add feature list:
+
+## Difference of all branches:
+- openfeign
+```text
+Only integrate openfeign without ribbon.
+```
+- ribbon-feign
+```text
+Integrate openfeign with spring-cloud-ribbon.
+```
+- kubernetes-ribbon-feign
+```text
+Integrate openfeign with spring-cloud-kubernetes-ribbon.
+```
+
+## Feature list:
 * spring-cloud-openfeign
 * okHttp3
 * swagger
