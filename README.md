@@ -59,13 +59,13 @@ curl -H "Content-Type:application/json-v1" -H "token:123" shf.boot.com/gateway-s
 ## dev
 ### consumer-service
 ```text
-http://127.0.0.1:8080/swagger-ui.html
+http://127.0.0.1:8081/swagger-ui.html
 ```
 ![avatar](./doc/img/dev-consumer-swagger.jpg)
 
 ### producer-service
 ```text
-http://127.0.0.1:8081/swagger-ui.html
+http://127.0.0.1:8080/swagger-ui.html
 ```
 ![avatar](./doc/img/dev-producer-swagger.jpg)
 
