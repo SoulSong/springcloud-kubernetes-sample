@@ -2,7 +2,7 @@
 A spring-cloud-kubernetes sample project builds on [springboot-kubernetes-sample](https://github.com/SoulSong/springboot-kubernetes-sample) project.
 Replace `spring-cloud-starter-kubernetes-ribbon` dependency with `spring-cloud-starter-netflix-ribbon`.
 
-Current master branch is kubernetes-ribbon-feign branch.
+Current `master` branch is `kubernetes-ribbon-feign` branch.
 
 ## Difference of all branches:
 - openfeign
