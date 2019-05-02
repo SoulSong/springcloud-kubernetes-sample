@@ -1,6 +1,7 @@
 package com.shf.spring.kube.controller;
 
-import com.shf.spring.kube.producer.service.HelloService;
+import com.shf.spring.kube.producer.endpoint.HelloEndpoint;
+
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -16,7 +17,7 @@ import java.net.UnknownHostException;
  */
 @RestController
 @Slf4j
-public class HelloControllerImpl implements HelloService {
+public class HelloControllerImpl implements HelloEndpoint {
 
     @Autowired
     private HttpServletRequest request;

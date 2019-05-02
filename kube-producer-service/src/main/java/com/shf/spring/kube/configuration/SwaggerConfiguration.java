@@ -14,6 +14,7 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
 /**
  * Description:
+ * Config swagger documentation description.
  *
  * @Author: songhaifeng
  * @Date: 2019/4/30 17:45
@@ -25,7 +26,6 @@ public class SwaggerConfiguration {
     @Bean
     public Docket api() {
         return new Docket(DocumentationType.SWAGGER_2)
-                .groupName("producer")
                 .genericModelSubstitutes(ResponseEntity.class)
                 .useDefaultResponseMessages(false)
                 .forCodeGeneration(true)
