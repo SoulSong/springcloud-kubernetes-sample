@@ -1,10 +1,24 @@
 # Introduction
-Builds on [springboot-kubernetes-sample](https://github.com/SoulSong/springboot-kubernetes-sample) project, 
+A spring-cloud-kubernetes sample project builds on [springboot-kubernetes-sample](https://github.com/SoulSong/springboot-kubernetes-sample) project.
 Replace `spring-cloud-starter-kubernetes-ribbon` dependency with `spring-cloud-starter-netflix-ribbon`.
 
-##Add feature list:
-* spring-cloud-kubernetes-ribbon
+## Difference of all branches:
+- openfeign
+```text
+Only integrate openfeign without ribbon.
+```
+- ribbon-feign
+```text
+Integrate openfeign with spring-cloud-ribbon.
+```
+- kubernetes-ribbon-feign
+```text
+Integrate openfeign with spring-cloud-kubernetes-ribbon.
+```
+
+## Feature list:
 * spring-cloud-openfeign
+* spring-cloud-kubernetes-ribbon
 * okHttp3
 * swagger
 * spring-cloud-gateway
