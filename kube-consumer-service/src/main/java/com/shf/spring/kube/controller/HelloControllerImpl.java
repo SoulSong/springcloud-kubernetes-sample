@@ -1,6 +1,6 @@
 package com.shf.spring.kube.controller;
 
-import com.shf.spring.kube.consumer.service.HelloService;
+import com.shf.spring.kube.consumer.endpoint.HelloEndpoint;
 import com.shf.spring.kube.feign.producer.ProducerClient;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
  */
 @RestController
 @Slf4j
-public class HelloControllerImpl implements HelloService {
+public class HelloControllerImpl implements HelloEndpoint {
 
     @Autowired
     private ProducerClient producerClient;
