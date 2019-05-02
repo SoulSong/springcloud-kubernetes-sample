@@ -6,7 +6,7 @@
         <groupId>com.shf.spring.kube</groupId>
         <artifactId>kube-sample</artifactId>
         <version>Develop</version>
-        <relativePath>../../springboot-openfeign-kubernetes-sample</relativePath>
+        <relativePath>../../springcloud-kubernetes-sample</relativePath>
     </parent>
 
     <artifactId>kube-dependency</artifactId>
