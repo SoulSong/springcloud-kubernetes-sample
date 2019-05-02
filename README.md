@@ -2,7 +2,6 @@
 Builds on [springboot-kubernetes-sample](https://github.com/SoulSong/springboot-kubernetes-sample) project, 
 Replace `spring-cloud-starter-kubernetes-ribbon` dependency with `spring-cloud-starter-netflix-ribbon`.
 
-
 ##Add feature list:
 * spring-cloud-kubernetes-ribbon
 * spring-cloud-openfeign
