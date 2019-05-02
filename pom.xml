@@ -24,8 +24,11 @@
     <modules>
         <module>kube-dependency</module>
         <module>kube-common</module>
-        <module>kube-producer-service</module>
+        <module>kube-consumer-client</module>
+        <module>kube-producer-client</module>
         <module>kube-consumer-service</module>
+        <module>kube-producer-service</module>
+        <module>kube-gateway-service</module>
     </modules>
 
 </project>

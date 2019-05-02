@@ -1,4 +1,4 @@
-package com.shf.spring.kube.consumer.service;
+package com.shf.spring.kube.producer.endpoint;
 
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -8,13 +8,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 /**
  * @author songhaifeng
  */
-@RequestMapping(value = "/hello", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-public interface HelloService {
+@RequestMapping(value = "/call")
+public interface HelloEndpoint {
 
-    @GetMapping(value = "{name}")
+    @GetMapping(value = "{name}", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     String hello(@PathVariable String name);
-
-    @GetMapping(value = "call/producer-service", consumes = "application/json-v1")
-    String call();
-
 }

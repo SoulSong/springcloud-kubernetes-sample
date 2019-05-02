@@ -1,0 +1,39 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: gateway-service-dm
+  namespace: springboot-kube
+spec:
+  selector:
+    matchLabels:
+      app: gateway-service
+      version: V1.0.0
+  replicas: 2
+  template:
+    metadata:
+      labels:
+        app: gateway-service
+        version: V1.0.0
+    spec:
+      containers:
+        - name: gateway-service
+          image: local-dtr.com/kube-gateway-service:Develop
+          ports:
+            - containerPort: 9999
+              name: http
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: gateway-service-svc
+  namespace: springboot-kube
+spec:
+  ports:
+    - port: 80
+      protocol: TCP
+      targetPort: http
+  selector:
+    app: gateway-service
+    version: V1.0.0
+  sessionAffinity: None
+  type: ClusterIP

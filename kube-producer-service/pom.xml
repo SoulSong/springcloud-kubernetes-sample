@@ -26,6 +26,11 @@
         </dependency>
 
         <dependency>
+            <groupId>com.shf.spring.kube</groupId>
+            <artifactId>kube-producer-client</artifactId>
+        </dependency>
+
+        <dependency>
             <groupId>io.springfox</groupId>
             <artifactId>springfox-swagger2</artifactId>
         </dependency>

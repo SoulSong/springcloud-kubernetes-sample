@@ -1,5 +1,6 @@
 package com.shf.spring.kube.configuration;
 
+import com.google.common.base.Predicates;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.MediaType;
@@ -19,6 +20,7 @@ import java.util.Arrays;
 
 /**
  * Description:
+ * Config swagger documentation description.
  *
  * @Author: songhaifeng
  * @Date: 2019/4/30 17:45
@@ -30,14 +32,15 @@ public class SwaggerConfiguration {
     @Bean
     public Docket api() {
         return new Docket(DocumentationType.SWAGGER_2)
-                .groupName("consumer")
                 .genericModelSubstitutes(ResponseEntity.class)
                 .useDefaultResponseMessages(false)
                 .forCodeGeneration(true)
                 .pathMapping("/")
                 .select()
-                .apis(RequestHandlerSelectors.basePackage("com.shf.spring.kube"))
-                .paths(PathSelectors.regex("/hello/.*"))
+                // exclude feign-client
+                .apis(Predicates.and(Predicates.not(RequestHandlerSelectors.basePackage("com.shf.spring.kube.feign")),
+                        RequestHandlerSelectors.basePackage("com.shf.spring.kube")))
+                .paths(PathSelectors.any())
                 .build()
                 .apiInfo(helloEndPointsInfo())
                 .globalOperationParameters(Arrays.asList(
