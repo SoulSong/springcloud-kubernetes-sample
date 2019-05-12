@@ -1,21 +1,23 @@
 # Introduction
 A spring-cloud-kubernetes sample project builds on [springboot-kubernetes-sample](https://github.com/SoulSong/springboot-kubernetes-sample) project.
-Replace `spring-cloud-starter-kubernetes-ribbon` dependency with `spring-cloud-starter-netflix-ribbon`.
+You can try k8s integrating with spring-cloud step by step, with all branches as follow. 
 
-Current `master` branch is `kubernetes-ribbon-feign` branch.
-
-## Difference of all branches:
-- openfeign
+## Differences of all branches:
+- openfeign(step 1)
 ```text
 Only integrate openfeign without ribbon.
 ```
-- ribbon-feign
+- ribbon-feign(step 2)
 ```text
 Integrate openfeign with spring-cloud-ribbon.
 ```
-- kubernetes-ribbon-feign
+- kubernetes-ribbon-feign(step 3)
 ```text
 Integrate openfeign with spring-cloud-kubernetes-ribbon.
+```
+- configmap-secret(step 4)
+```text
+Add kubernetes configmap & secret feature for configuration. See consumer-service for more detail. 
 ```
 
 ## Feature list:
@@ -24,6 +26,7 @@ Integrate openfeign with spring-cloud-kubernetes-ribbon.
 * okHttp3
 * swagger
 * spring-cloud-gateway
+* kubernetes configmap & secret for configuration
 * Custom header for api-version
 * Add FeignHeaderInterceptor for throughing http-headers into the downstream service
 * Aggregate all services' swagger config into gateway-service
@@ -63,6 +66,73 @@ curl -H "Content-Type:application/json-v1" -H "token:123" shf.boot.com/gateway-s
 ```
 
 
+# Config & Secret
+
+## Create base64 info
+```bash
+  $ echo -n "admin" | base64
+  YWRtaW4=
+  $ echo -n "123456" | base64
+  MTIzNDU2
+```
+
+## How To Test ConfigMap & Secret
+
+### dev
+
+- test secret ref
+```text
+$ curl 127.0.0.1:8081/secret
+mongodb://admin:654321@mongodb/admin
+```
+
+- test config ref
+```text
+$ curl 127.0.0.1:8081/single/config/variable
+properties-variable0
+```
+
+- test batch config ref
+```text
+$ curl 127.0.0.1:8081/batch/config/variables
+{"variable1":"properties-variable1","variable2":"properties-variable2"}
+```
+
+### k8s
+
+- test secret ref
+```text
+$ curl http://shf.boot.com/gateway-service/consumer-service/secret
+mongodb://admin:123456@mongodb/test
+```
+
+- test config ref
+```text
+$ curl http://shf.boot.com/gateway-service/consumer-service/single/config/variable
+configmap-variable0
+```
+
+- test batch config ref
+```text
+$ curl http://shf.boot.com/gateway-service/consumer-service/batch/config/variables
+{"variable1":"configmap-variable1","variable2":"configmap-variable2"}
+```
+
+## Test Secret Volume In K8S
+- create secret
+```bash
+$ kubectl create secret generic private-secret -n springboot-kube --from-file=privatekey=./kubernetes/privatekey
+secret "private-secret" created
+```
+
+- check the mounted directory and data in the mounted file
+```bash
+$ kubectl exec $(kubectl get po -n springboot-kube | grep 'consumer' | awk  'NR==1{print $1}') -n springboot-kube -c consumer-service ls /etc/
+$ kubectl exec $(kubectl get po -n springboot-kube | grep 'consumer' | awk  'NR==1{print $1}') -n springboot-kube -c consumer-service cat /etc/private-key.key
+abc
+```
+
+
 # How To Use Swagger
 ## dev
 - consumer-service
@@ -85,3 +155,5 @@ Aggregate all swagger info for all services.
 http://shf.boot.com/gateway-service/swagger-ui.html
 ```
 ![avatar](./doc/img/k8s-gateway-swagger.jpg)
+
+

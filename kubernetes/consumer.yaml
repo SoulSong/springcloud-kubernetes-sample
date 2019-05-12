@@ -15,16 +15,59 @@ spec:
         app: consumer-service
         version: V1.0.0
     spec:
+      volumes:
+        - name: private-secret-volume
+          secret:
+            secretName: private-secret
+            # select which items to be mounted
+            items:
+              - key: privatekey
+                path: privatekey.key
       containers:
         - name: consumer-service
           image: local-dtr.com/kube-consumer-service:Develop
           ports:
             - containerPort: 8081
               name: http
+          # batch configmap ref
+          envFrom:
+            - configMapRef:
+                name: consumer-configmap
+              # add prefix for all key-names
+              prefix: configs.
+          # single configmap or secret ref
+          env:
+            - name: config.variable0
+              valueFrom:
+                configMapKeyRef:
+                  name: consumer-configmap
+                  key: variable0
+            - name: MONGO_DATABASE
+              valueFrom:
+                secretKeyRef:
+                  name: mongodb
+                  key: database-name
+            - name: MONGO_USERNAME
+              valueFrom:
+                secretKeyRef:
+                  name: mongodb
+                  key: database-user
+            - name: MONGO_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: mongodb
+                  key: database-password
+          volumeMounts:
+            - name: private-secret-volume
+              readOnly: true
+              # mount path in container
+              mountPath: "/etc/private-key.key"
+              # defined in volumes
+              subPath: privatekey.key
           readinessProbe:
             httpGet:
               path: /manage/info
-              # use named port
+              # use named port, same with pod:ports:name
               port: http
             initialDelaySeconds: 5
             periodSeconds: 10
@@ -44,7 +87,6 @@ spec:
   ports:
     - port: 80
       protocol: TCP
-      # use named port, same with pod:ports:name
       targetPort: http
   selector:
     app: consumer-service

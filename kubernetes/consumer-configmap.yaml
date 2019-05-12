@@ -1,0 +1,9 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: consumer-configmap
+  namespace: springboot-kube
+data:
+  variable0: configmap-variable0
+  variable1: configmap-variable1
+  variable2: configmap-variable2
