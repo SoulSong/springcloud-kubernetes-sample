@@ -24,6 +24,8 @@ public class ConfigController {
 
     @Autowired
     private BeanConfiguration.Variables variables;
+    @Autowired
+    private BeanConfiguration.ReloadProperties reloadProperties;
 
     @GetMapping("/secret")
     public String getSecretConfig() {
@@ -38,5 +40,10 @@ public class ConfigController {
     @GetMapping("/batch/config/variables")
     public BeanConfiguration.Variables getBatchConfigVariable() {
         return variables;
+    }
+
+    @GetMapping("/reload/config/properties")
+    public BeanConfiguration.ReloadProperties getReloadConfigProperties() {
+        return reloadProperties;
     }
 }
