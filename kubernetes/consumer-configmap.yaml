@@ -7,3 +7,6 @@ data:
   variable0: configmap-variable0
   variable1: configmap-variable1
   variable2: configmap-variable2
+  application.properties: |-
+    configs.reload.property1=configmap-reload-property1
+    configs.reload.property2=configmap-reload-property2

@@ -1,0 +1,20 @@
+spring:
+  cloud:
+    kubernetes:
+      config:
+        enabled: true
+        sources:
+          - name: consumer-configmap
+            namespace: springboot-kube
+      # see org.springframework.cloud.autoconfigure.RestartEndpointWithoutIntegrationConfiguration
+      # see org.springframework.cloud.autoconfigure.RefreshEndpointAutoConfiguration
+      reload:
+        enabled: true
+        monitoring-config-maps: true
+        strategy: refresh
+        mode: polling
+        period: 10000
+management:
+  endpoint:
+    restart:
+      enabled: true

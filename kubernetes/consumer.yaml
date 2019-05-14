@@ -69,13 +69,13 @@ spec:
               path: /manage/info
               # use named port, same with pod:ports:name
               port: http
-            initialDelaySeconds: 5
+            initialDelaySeconds: 20
             periodSeconds: 10
           livenessProbe:
             httpGet:
               path: /manage/healthcheck
               port: http
-            initialDelaySeconds: 15
+            initialDelaySeconds: 30
             periodSeconds: 20
 ---
 apiVersion: v1
