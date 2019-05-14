@@ -1,0 +1,9 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: consumer-configmap
+  namespace: springboot-kube
+data:
+  application.properties: |-
+    configs.reload.property1=configmap-reload1-property1
+    configs.reload.property2=configmap-reload1-property2

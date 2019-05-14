@@ -18,14 +18,25 @@ public class BeanConfiguration {
 
     @Bean
     @ConfigurationProperties(prefix = "configs")
-    public Variables variables(){
+    public Variables variables() {
         return new Variables();
     }
 
+    @Bean
+    @ConfigurationProperties(prefix = "configs.reload")
+    public ReloadProperties reloadProperties() {
+        return new ReloadProperties();
+    }
 
     @Data
-    public class Variables{
+    public class Variables {
         private String variable1;
         private String variable2;
+    }
+
+    @Data
+    public class ReloadProperties {
+        private String property1;
+        private String property2;
     }
 }

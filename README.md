@@ -19,17 +19,22 @@ Integrate openfeign with spring-cloud-kubernetes-ribbon.
 ```text
 Add kubernetes configmap & secret feature for configuration. See consumer-service for more detail. 
 ```
+- cloud-kubernetes-config(step 5)
+```text
+Integrate spring-cloud-kubernetes-config for reloading configurations
+```
 
 ## Feature list:
-* spring-cloud-openfeign
-* spring-cloud-kubernetes-ribbon
-* okHttp3
-* swagger
-* spring-cloud-gateway
-* kubernetes configmap & secret for configuration
+* Integrate spring-cloud-openfeign for native declarative request call
+* Integrate spring-cloud-kubernetes-ribbon for discover
+* Integrate swagger for API documents
+* Integrate spring-cloud-gateway to route and filter backend services
+* kubernetes configmap & secret for configurations
+* Integrate spring-cloud-kubernetes-config for reloading configurations
 * Custom header for api-version
 * Add FeignHeaderInterceptor for throughing http-headers into the downstream service
-* Aggregate all services' swagger config into gateway-service
+* Aggregate all services' swagger documents into gateway-service
+* okHttp3
 
 
 # How To Build & Deploy
@@ -130,6 +135,24 @@ secret "private-secret" created
 $ kubectl exec $(kubectl get po -n springboot-kube | grep 'consumer' | awk  'NR==1{print $1}') -n springboot-kube -c consumer-service ls /etc/
 $ kubectl exec $(kubectl get po -n springboot-kube | grep 'consumer' | awk  'NR==1{print $1}') -n springboot-kube -c consumer-service cat /etc/private-key.key
 abc
+```
+
+## Test Config Reload
+- request the reload_properties endpoint
+```text
+$ curl http://shf.boot.com/consumer-service/reload/config/properties
+{"property1":"configmap-reload-property1","property2":"configmap-reload-property2"}
+```
+
+- modify the config
+```bash
+$ kubectl apply -f ./kubernetes/configmap_reload/consumer-configmap-reload.yaml
+```
+
+- check the config whether be reloaded?
+```text
+$ curl http://shf.boot.com/consumer-service/reload/config/properties
+{"property1":"configmap-reload1-property1","property2":"configmap-reload1-property2"}
 ```
 
 
