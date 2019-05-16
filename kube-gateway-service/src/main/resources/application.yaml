@@ -3,7 +3,8 @@ spring:
     name: gateway-api
   profiles:
     active: @profileActive@
+  jmx:
+    enabled: false
 
 server:
   port: 9999
-
