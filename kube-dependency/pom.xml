@@ -97,9 +97,7 @@
                     <include>application-${profileActive}.yml</include>
                     <include>bootstrap.properties</include>
                     <include>bootstrap.yaml</include>
-                    <include>bootstrap-${profileActive}.yaml</include>
                     <include>bootstrap.yml</include>
-                    <include>bootstrap-${profileActive}.yml</include>
                 </includes>
             </resource>
         </resources>
