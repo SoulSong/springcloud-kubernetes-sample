@@ -5,5 +5,8 @@ metadata:
   namespace: springboot-kube
 data:
   application.properties: |-
+    config.variable0=configmap-variable0
+    configs.variable1=configmap-variable1
+    configs.variable2=configmap-variable2
     configs.reload.property1=configmap-reload1-property1
     configs.reload.property2=configmap-reload1-property2
