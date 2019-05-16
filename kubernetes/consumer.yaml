@@ -33,15 +33,8 @@ spec:
           envFrom:
             - configMapRef:
                 name: consumer-configmap
-              # add prefix for all key-names
-              prefix: configs.
-          # single configmap or secret ref
+          # single secret ref
           env:
-            - name: config.variable0
-              valueFrom:
-                configMapKeyRef:
-                  name: consumer-configmap
-                  key: variable0
             - name: MONGO_DATABASE
               valueFrom:
                 secretKeyRef:
