@@ -1,0 +1,9 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: redis-configmap
+  namespace: springboot-kube
+data:
+  redis-config: |-
+    maxmemory 2mb
+    maxmemory-policy  allkeys-lru

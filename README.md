@@ -23,6 +23,11 @@ Add kubernetes configmap & secret feature for configuration. See consumer-servic
 ```text
 Integrate spring-cloud-kubernetes-config for reloading configurations
 ```
+- redis-rate-limiter(step 6)
+```text
+Achieve distribute rate limiting by integrating spring-cloud-gateway with redis.
+>  token bucket algorithm
+```
 
 ## Feature list:
 * Integrate spring-cloud-openfeign for native declarative request call
@@ -34,8 +39,9 @@ Integrate spring-cloud-kubernetes-config for reloading configurations
 * Custom header for api-version
 * Add FeignHeaderInterceptor for throughing http-headers into the downstream service
 * Aggregate all services' swagger documents into gateway-service
+* Distribute rate limiting, using `token bucket algorithm`
+* Deploy redis with standalone mode in K8S, and export access port
 * okHttp3
-
 
 # How To Build & Deploy
 ```bash
@@ -50,24 +56,24 @@ More information can forward to [REAMDE.md](https://github.com/SoulSong/springbo
 
 - request consumer-service directly
 ```text
-curl -H "Content-Type:application/json-v1" -H "token:123" localhost:8081/hello/call/producer-service
+$ curl -H "Content-Type:application/json-v1" -H "token:123" localhost:8081/hello/call/producer-service
 ```
 
 - request consumer-service by gateway-service
 ```text
-curl -H "Content-Type:application/json-v1" -H "token:123" localhost:9999/consumer-service/hello/call/producer-service
+$ curl -H "Content-Type:application/json-v1" -H "token:123" localhost:9999/consumer-service/hello/call/producer-service
 ```
 
 ## k8s
 
 - request consumer-service directly
 ```text
-curl -H "Content-Type:application/json-v1" -H "token:123" shf.boot.com/consumer-service/hello/call/producer-service
+$ curl -H "Content-Type:application/json-v1" -H "token:123" shf.boot.com/consumer-service/hello/call/producer-service
 ```
 
 - request consumer-service by gateway-service
 ```text
-curl -H "Content-Type:application/json-v1" -H "token:123" shf.boot.com/gateway-service/consumer-service/hello/call/producer-service
+$ curl -H "Content-Type:application/json-v1" -H "token:123" shf.boot.com/gateway-service/consumer-service/hello/call/producer-service
 ```
 
 
@@ -81,7 +87,7 @@ curl -H "Content-Type:application/json-v1" -H "token:123" shf.boot.com/gateway-s
   MTIzNDU2
 ```
 
-## How To Test ConfigMap & Secret
+## Test ConfigMap & Secret
 
 ### dev
 
@@ -137,7 +143,7 @@ $ kubectl exec $(kubectl get po -n springboot-kube | grep 'consumer' | awk  'NR=
 abc
 ```
 
-## Test Config Reload
+## Test Config Reload In K8S
 - request the reload_properties endpoint
 ```text
 $ curl http://shf.boot.com/consumer-service/reload/config/properties
@@ -154,6 +160,36 @@ $ kubectl apply -f ./kubernetes/configmap_reload/consumer-configmap-reload.yaml
 $ curl http://shf.boot.com/consumer-service/reload/config/properties
 {"property1":"configmap-reload1-property1","property2":"configmap-reload1-property2"}
 ```
+
+# Distribute Rate Limiting
+Achieve distribute rate limiting by integrating `spring-cloud-gateway` with `redis`, using the `token bucket algorithm`. 
+
+## Build redis-server in K8S
+Here is a [guide document](REDIS_README.md) to introduce how to build a `standalone` redis-server in K8S.
+
+## Test rate limiting
+Test the following cases through jmeter, can set the number of threads more than 20.
+```case
+curl -H "userId:SOUL" shf.boot.com/gateway-service/consumer-service/hello/song
+curl -H "userId:SONG" shf.boot.com/gateway-service/consumer-service/hello/song
+```
+When the rate limiting comes into effect, there will be two phenomena as follows:
+- Get keys from redis
+> K8S:0>keys request_rate_limiter*
+>   1)  "request_rate_limiter.{SONG}.timestamp"
+>   2)  "request_rate_limiter.{SOUL}.timestamp"
+>   3)  "request_rate_limiter.{SONG}.tokens"
+>   4)  "request_rate_limiter.{SOUL}.tokens"
+
+- Some requests could not be responded normally, they failed with response header which contains `429` http-code, means too many requests.
+> **HTTP/1.1 429 Too Many Requests**<br>
+  Server: nginx/1.15.10<br>
+  Date: Sat, 18 May 2019 16:10:54 GMT<br>
+  Content-Length: 0<br>
+  Connection: keep-alive<br>
+  **X-RateLimit-Remaining: 0**<br>
+  **X-RateLimit-Burst-Capacity: 10**<br>
+  **X-RateLimit-Replenish-Rate: 5**<br>
 
 
 # How To Use Swagger
