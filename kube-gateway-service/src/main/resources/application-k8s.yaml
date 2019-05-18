@@ -9,6 +9,11 @@ spring:
           predicates:
             - Path=/consumer-service/**
           filters:
+            - name: RequestRateLimiter
+              args:
+                key-resolver: "#{@userKeyResolver}"
+                redis-rate-limiter.replenishRate: 5
+                redis-rate-limiter.burstCapacity: 10
             # ignore path, no context-path defined in consumer-service
             - RewritePath=/consumer-service/(?<segment>.*), /$\{segment}
         - id: producer-service
@@ -16,4 +21,8 @@ spring:
           predicates:
             - Path=/producer-service/**
           filters:
-            - RewritePath=/producer-service/(?<segment>.*), /$\{segment}
+            # another config type for ignore path
+            - StripPrefix=1
+  redis:
+    host: redis
+    port: 6379
