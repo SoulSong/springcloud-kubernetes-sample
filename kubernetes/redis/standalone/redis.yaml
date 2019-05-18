@@ -1,0 +1,60 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: redis-dm
+  namespace: springboot-kube
+spec:
+  selector:
+    matchLabels:
+      app: redis
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: redis
+    spec:
+      containers:
+        - name: redis
+          image: redis:5.0.4
+          env:
+            - name: MASTER
+              value: "true"
+          ports:
+            - containerPort: 6379
+          command:
+            - "redis-server"
+          args:
+            - "/usr/local/etc/redis/redis.conf"
+          resources:
+            limits:
+              cpu: "0.1"
+          volumeMounts:
+            - mountPath: "/redis-master-data"
+              name: data
+            - mountPath: "/usr/local/etc/redis/redis.conf"
+              name: config
+              subPath: redis.conf
+      volumes:
+        - name: data
+          emptyDir: {}
+        - name: config
+          configMap:
+            name: redis-configmap
+            items:
+              - key: redis-config
+                path: redis.conf
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: redis
+  namespace: springboot-kube
+spec:
+  ports:
+    - port: 6379
+      protocol: TCP
+      targetPort: 6379
+  selector:
+    app: redis
+  sessionAffinity: None
+  type: ClusterIP
