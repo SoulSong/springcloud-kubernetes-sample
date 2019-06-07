@@ -40,16 +40,22 @@ Achieve distribute rate limiting by integrating spring-cloud-gateway with redis.
 * Add FeignHeaderInterceptor for throughing http-headers into the downstream service
 * Aggregate all services' swagger documents into gateway-service
 * Distribute rate limiting, using `token bucket algorithm`
-* Deploy redis with standalone mode in K8S, and export access port
+* Deploy redis with standalone mode in K8S, and **export access port**
 * okHttp3
 
-# How To Build & Deploy
+# How To Build
 ```bash
-mvn clean install -P k8s
-cd kubernetes && kubectl apply -f .
+$ mvn clean install -P k8s
 ```
 More information can forward to [REAMDE.md](https://github.com/SoulSong/springboot-kubernetes-sample/blob/master/README.md) for detail description of building&deploying and so on. 
 
+# How To Deploy
+```bash
+$ kubectl apply -f ./kubernetes/namespace.yaml
+$ kubectl create secret generic private-secret -n springboot-kube --from-file=privatekey=./kubernetes/privatekey
+$ kubectl apply -f ./kubernetes/redis/standalone/
+$ kubectl apply -f ./kubernetes/
+```
 
 # How To Test
 ## dev
