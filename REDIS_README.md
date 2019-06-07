@@ -9,7 +9,7 @@ How to run redis server(standalone mode) in k8s and expose the access port.
 
 # Run 
 ```bash
-$ cd kubernetes/redis/standalone && kubectl apply -f . 
+$ kubectl apply -f ./kubernetes/redis/standalone/
 ```
 
 # Test
