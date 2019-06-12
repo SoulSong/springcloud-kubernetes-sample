@@ -9,6 +9,15 @@ spec:
       app: consumer-service
       version: V1.0.0
   replicas: 2
+  # set the limit of history version
+  revisionHistoryLimit: 3
+  strategy:
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 0
+    type: RollingUpdate
+  minReadySeconds: 60
+  progressDeadlineSeconds: 180
   template:
     metadata:
       labels:
@@ -25,7 +34,7 @@ spec:
                 path: privatekey.key
       containers:
         - name: consumer-service
-          image: local-dtr.com/kube-consumer-service:Develop
+          image: local-dtr.com/kube-consumer-service:1.0
           ports:
             - containerPort: 8081
               name: http
