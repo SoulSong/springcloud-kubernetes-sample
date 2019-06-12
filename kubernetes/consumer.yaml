@@ -34,7 +34,7 @@ spec:
                 path: privatekey.key
       containers:
         - name: consumer-service
-          image: local-dtr.com/kube-consumer-service:1.0
+          image: local-dtr.com/kube-consumer-service:Develop
           ports:
             - containerPort: 8081
               name: http
