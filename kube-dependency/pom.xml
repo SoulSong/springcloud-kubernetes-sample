@@ -98,6 +98,7 @@
                     <include>bootstrap.properties</include>
                     <include>bootstrap.yaml</include>
                     <include>bootstrap.yml</include>
+                    <include>scripts/*</include>
                 </includes>
             </resource>
         </resources>
