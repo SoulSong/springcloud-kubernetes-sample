@@ -51,8 +51,8 @@ end
 --redis.log(redis.LOG_WARNING, "allowed_num " .. allowed_num)
 --redis.log(redis.LOG_WARNING, "new_tokens " .. new_tokens)
 
-redis.call("setex", tokens_key, 10, new_tokens)
-redis.call("setex", timestamp_key, 10, now)
+redis.call("setex", tokens_key, ttl, new_tokens)
+redis.call("setex", timestamp_key, ttl, now)
 
 return { allowed_num, new_tokens}
 

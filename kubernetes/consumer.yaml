@@ -35,6 +35,8 @@ spec:
       containers:
         - name: consumer-service
           image: local-dtr.com/kube-consumer-service:Develop
+          # it is the best practice to config for prod.
+          # imagePullPolicy: Always
           ports:
             - containerPort: 8081
               name: http

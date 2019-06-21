@@ -28,6 +28,11 @@ Integrate spring-cloud-kubernetes-config for reloading configurations
 Achieve distribute rate limiting by integrating spring-cloud-gateway with redis.
 >  token bucket algorithm
 ```
+- master(last step)
+```text
+Contains all features shown as follow. 
+```
+
 
 ## Feature list:
 * Integrate spring-cloud-openfeign for native declarative request call
@@ -197,6 +202,30 @@ When the rate limiting comes into effect, there will be two phenomena as follows
   **X-RateLimit-Burst-Capacity: 10**<br>
   **X-RateLimit-Replenish-Rate: 5**<br>
 
+## Custom another limiting strategies
+Here's a lua [script](./kube-gateway-service/src/main/resources/scripts/scroll_window_request_rate_limiter.lua) that implements a window-scrolling limiting strategy.
+
+### Test case
+Setting the log level of the redis-server is warning, then execute the script with the command
+`redis-cli --eval scroll_window_request_rate_limiter.lua 'foo' , 5 10`. See the detail log:
+```text
+[8424] 22 Jun 17:44:39.312 # allowed: 1 ; allowed_numer: 4
+[8424] 22 Jun 17:44:41.222 # allowed: 1 ; allowed_numer: 3
+[8424] 22 Jun 17:44:42.159 # allowed: 1 ; allowed_numer: 2
+[8424] 22 Jun 17:44:42.939 # allowed: 1 ; allowed_numer: 1
+[8424] 22 Jun 17:44:43.734 # allowed: 1 ; allowed_numer: 0
+[8424] 22 Jun 17:44:44.548 # allowed: 0 ; allowed_numer: 0
+[8424] 22 Jun 17:44:45.305 # allowed: 0 ; allowed_numer: 0
+[8424] 22 Jun 17:44:46.055 # allowed: 0 ; allowed_numer: 0
+[8424] 22 Jun 17:44:49.569 # allowed: 1 ; allowed_numer: 4
+[8424] 22 Jun 17:44:51.382 # allowed: 1 ; allowed_numer: 3
+[8424] 22 Jun 17:44:52.556 # allowed: 1 ; allowed_numer: 2
+[8424] 22 Jun 17:44:53.398 # allowed: 1 ; allowed_numer: 1
+[8424] 22 Jun 17:44:56.493 # allowed: 1 ; allowed_numer: 0
+[8424] 22 Jun 17:44:58.610 # allowed: 0 ; allowed_numer: 0
+[8424] 22 Jun 17:45:00.417 # allowed: 1 ; allowed_numer: 4
+```
+The output is as expected, the window_size is 10 seconds and the capacity is 5.
 
 # How To Use Swagger
 ## dev
