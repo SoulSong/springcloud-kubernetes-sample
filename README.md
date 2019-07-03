@@ -202,7 +202,7 @@ When the rate limiting comes into effect, there will be two phenomena as follows
   **X-RateLimit-Burst-Capacity: 10**<br>
   **X-RateLimit-Replenish-Rate: 5**<br>
 
-## Custom another limiting strategies
+## Custom another limiting strategy
 Here's a lua [script](./kube-gateway-service/src/main/resources/scripts/scroll_window_request_rate_limiter.lua) that implements a window-scrolling limiting strategy.
 
 ### Test case
