@@ -5,7 +5,7 @@ spring:
     gateway:
       routes:
         - id: consumer-service
-          uri: http://consumer-service-svc
+          uri: lb://consumer-service-svc
           predicates:
             - Path=/consumer-service/**
           filters:
@@ -17,7 +17,7 @@ spring:
             # ignore path, no context-path defined in consumer-service
             - RewritePath=/consumer-service/(?<segment>.*), /$\{segment}
         - id: producer-service
-          uri: http://producer-service-svc
+          uri: lb://producer-service-svc
           predicates:
             - Path=/producer-service/**
           filters:
