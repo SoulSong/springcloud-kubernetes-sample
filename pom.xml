@@ -10,10 +10,6 @@
     <name>${project.artifactId}</name>
 
     <properties>
-        <java.version>1.8</java.version>
-        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <spring-cloud-version>Finchley.SR2</spring-cloud-version>
-        <spring-cloud-kubernetes-version>1.0.1.RELEASE</spring-cloud-kubernetes-version>
     </properties>
 
     <parent>
@@ -30,6 +26,8 @@
         <module>kube-consumer-service</module>
         <module>kube-producer-service</module>
         <module>kube-gateway-service</module>
+        <module>kube-auth-server</module>
+        <module>kube-resource-server</module>
     </modules>
 
 </project>

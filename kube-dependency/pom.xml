@@ -17,8 +17,15 @@
     <name>${project.artifactId}</name>
 
     <properties>
+        <java.version>1.8</java.version>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <spring-boot-version>2.0.9.RELEASE</spring-boot-version>
+        <spring-cloud-version>Finchley.SR2</spring-cloud-version>
+        <spring-security-jwt-version>1.0.10.RELEASE</spring-security-jwt-version>
+        <spring-cloud-kubernetes-version>1.0.1.RELEASE</spring-cloud-kubernetes-version>
+        <swagger-version>2.9.2</swagger-version>
+        <lombok-version>1.16.18</lombok-version>
         <docker.image.prefix>local-dtr.com</docker.image.prefix>
-        <swagger.version>2.9.2</swagger.version>
     </properties>
 
     <dependencyManagement>
@@ -33,9 +40,21 @@
             </dependency>
 
             <dependency>
+                <groupId>org.springframework.security.oauth.boot</groupId>
+                <artifactId>spring-security-oauth2-autoconfigure</artifactId>
+                <version>${spring-boot-version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.springframework.security</groupId>
+                <artifactId>spring-security-jwt</artifactId>
+                <version>${spring-security-jwt-version}</version>
+            </dependency>
+
+            <dependency>
                 <groupId>org.projectlombok</groupId>
                 <artifactId>lombok</artifactId>
-                <version>1.16.18</version>
+                <version>${lombok-version}</version>
             </dependency>
 
             <dependency>
@@ -59,13 +78,13 @@
             <dependency>
                 <groupId>io.springfox</groupId>
                 <artifactId>springfox-swagger2</artifactId>
-                <version>${swagger.version}</version>
+                <version>${swagger-version}</version>
             </dependency>
 
             <dependency>
                 <groupId>io.springfox</groupId>
                 <artifactId>springfox-swagger-ui</artifactId>
-                <version>${swagger.version}</version>
+                <version>${swagger-version}</version>
             </dependency>
         </dependencies>
 
@@ -98,6 +117,15 @@
                     <include>bootstrap.properties</include>
                     <include>bootstrap.yaml</include>
                     <include>bootstrap.yml</include>
+                    <include>config/application.properties</include>
+                    <include>config/application-${profileActive}.properties</include>
+                    <include>config/application.yaml</include>
+                    <include>config/application-${profileActive}.yaml</include>
+                    <include>config/application.yml</include>
+                    <include>config/application-${profileActive}.yml</include>
+                    <include>config/bootstrap.properties</include>
+                    <include>config/bootstrap.yaml</include>
+                    <include>config/bootstrap.yml</include>
                     <include>scripts/*</include>
                 </includes>
             </resource>
