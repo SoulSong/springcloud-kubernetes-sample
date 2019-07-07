@@ -8,6 +8,7 @@ spring:
             namespace: springboot-kube
       # see org.springframework.cloud.autoconfigure.RestartEndpointWithoutIntegrationConfiguration
       # see org.springframework.cloud.autoconfigure.RefreshEndpointAutoConfiguration
+      # https://cloud.spring.io/spring-cloud-static/spring-cloud-kubernetes/1.0.2.RELEASE/single/spring-cloud-kubernetes.html#_propertysource_reload
       reload:
         enabled: true
         monitoring-config-maps: true

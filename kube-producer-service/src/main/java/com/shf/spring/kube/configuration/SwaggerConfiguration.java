@@ -12,6 +12,9 @@ import springfox.documentation.spi.DocumentationType;
 import springfox.documentation.spring.web.plugins.Docket;
 import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
+import static com.shf.spring.kube.common.swagger.SwaggerHelper.builderApiInfo;
+import static com.shf.spring.kube.common.swagger.SwaggerHelper.builderCommonOperationParameters;
+
 /**
  * Description:
  * Config swagger documentation description.
@@ -34,16 +37,7 @@ public class SwaggerConfiguration {
                 .apis(RequestHandlerSelectors.basePackage("com.shf.spring.kube"))
                 .paths(PathSelectors.any())
                 .build()
-                .apiInfo(helloEndPointsInfo());
+                .apiInfo(builderApiInfo("Producer-Service", "Producer-Service REST API"));
     }
 
-    private ApiInfo helloEndPointsInfo() {
-        return new ApiInfoBuilder().title("Producer-Service REST API")
-                .description("Producer-Service")
-                .contact(new Contact("songhaifeng", "", "songhaifengshuaige@gmail.com"))
-                .license("Apache 2.0")
-                .licenseUrl("http://www.apache.org/licenses/LICENSE-2.0.html")
-                .version("1.0.0")
-                .build();
-    }
 }

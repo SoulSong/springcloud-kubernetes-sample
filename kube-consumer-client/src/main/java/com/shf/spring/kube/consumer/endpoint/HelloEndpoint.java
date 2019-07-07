@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 /**
  * @author songhaifeng
  */
-@RequestMapping(value = "/hello", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+@RequestMapping(value = "/hello", produces = MediaType.TEXT_HTML_VALUE)
 public interface HelloEndpoint {
 
     @GetMapping(value = "{name}")

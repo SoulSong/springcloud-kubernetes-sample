@@ -1,6 +1,5 @@
-package com.shf.spring.kube.configuration;
+package com.shf.spring.kube.web.configuration;
 
-import com.google.common.base.Predicates;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.ResponseEntity;
@@ -32,12 +31,10 @@ public class SwaggerConfiguration {
                 .forCodeGeneration(true)
                 .pathMapping("/")
                 .select()
-                // exclude feign-client
-                .apis(Predicates.and(Predicates.not(RequestHandlerSelectors.basePackage("com.shf.spring.kube.feign")),
-                        RequestHandlerSelectors.basePackage("com.shf.spring.kube")))
+                .apis(RequestHandlerSelectors.basePackage("com.shf.spring.kube"))
                 .paths(PathSelectors.any())
                 .build()
-                .apiInfo(builderApiInfo("Consumer-Service","Consumer-Service REST API"))
+                .apiInfo(builderApiInfo("Resource-Service", "Consumer-Service REST API"))
                 .globalOperationParameters(builderCommonOperationParameters());
     }
 

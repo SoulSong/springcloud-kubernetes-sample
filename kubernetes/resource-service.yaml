@@ -1,0 +1,39 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: resource-service-dm
+  namespace: springboot-kube
+spec:
+  selector:
+    matchLabels:
+      app: resource-service
+      version: V1.0.0
+  replicas: 2
+  template:
+    metadata:
+      labels:
+        app: resource-service
+        version: V1.0.0
+    spec:
+      containers:
+        - name: oauth-service
+          image: local-dtr.com/kube-resource-server:Develop
+          ports:
+            - containerPort: 3001
+              name: http
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: resource-service-svc
+  namespace: springboot-kube
+spec:
+  ports:
+    - port: 80
+      protocol: TCP
+      targetPort: http
+  selector:
+    app: resource-service
+    version: V1.0.0
+  sessionAffinity: None
+  type: ClusterIP

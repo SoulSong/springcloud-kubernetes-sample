@@ -1,5 +1,7 @@
 package com.shf.spring.kube.controller;
 
+import com.shf.spring.kube.common.oauth2.filter.ClaimsContextHolder;
+import com.shf.spring.kube.common.oauth2.token.TokenClaims;
 import com.shf.spring.kube.consumer.endpoint.HelloEndpoint;
 import com.shf.spring.kube.feign.producer.ProducerClient;
 import lombok.extern.slf4j.Slf4j;
@@ -19,13 +21,15 @@ public class HelloControllerImpl implements HelloEndpoint {
 
     @Override
     public String hello(@PathVariable String name) {
-        final String message = String.format("hello %s", name);
+        TokenClaims tokenClaims = ClaimsContextHolder.getCurrentCliam().get();
+        final String message = String.format("hello %s", null == tokenClaims ? "anonymity" :
+                null != tokenClaims.getUserName() ? tokenClaims.getUserName() : tokenClaims.getClientId());
         log.info(message);
         return message;
     }
 
     @Override
     public String call() {
-        return String.format("Get response from producer-service : \"%s\"", producerClient.hello("consumer"));
+        return String.format("Get response from producer-service : \"%s\"", producerClient.hello("anonymity"));
     }
 }

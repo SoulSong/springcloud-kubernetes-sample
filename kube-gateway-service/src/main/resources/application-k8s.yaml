@@ -14,6 +14,10 @@ spring:
                 key-resolver: "#{@userKeyResolver}"
                 redis-rate-limiter.replenishRate: 5
                 redis-rate-limiter.burstCapacity: 10
+            - name: RequestAuthentication
+              args:
+                white-list: /v2/api-docs
+            - name: RequestAuthorization
             # ignore path, no context-path defined in consumer-service
             - RewritePath=/consumer-service/(?<segment>.*), /$\{segment}
         - id: producer-service
@@ -22,6 +26,18 @@ spring:
             - Path=/producer-service/**
           filters:
             # another config type for ignore path
+            - StripPrefix=1
+        - id: auth-service
+          uri: lb://auth-service-svc
+          predicates:
+            - Path=/auth-service/**
+          filters:
+            - StripPrefix=1
+        - id: resource-service
+          uri: lb://resource-service-svc
+          predicates:
+            - Path=/resource-service/**
+          filters:
             - StripPrefix=1
   redis:
     host: redis

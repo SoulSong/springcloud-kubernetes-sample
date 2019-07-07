@@ -23,7 +23,10 @@ There are two modules:
 > curl -H "Authorization:Bearer {access_token}" "http://localhost:3001/resource/authority_with_user"
 
 ## Others
-> **There are full unit testing.**
+**There are full unit test cases for showing how it works.**
+> **NOTE**:<br>
+Before you run the test cases of `kube-resource-server`, please start the `kube-auth-server` first. 
+It is an integration test.
 
 #Reference
 - https://www.baeldung.com/spring-security-oauth-jwt

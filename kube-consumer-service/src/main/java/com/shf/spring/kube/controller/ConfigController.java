@@ -3,6 +3,7 @@ package com.shf.spring.kube.controller;
 import com.shf.spring.kube.configuration.BeanConfiguration;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -27,22 +28,22 @@ public class ConfigController {
     @Autowired
     private BeanConfiguration.ReloadProperties reloadProperties;
 
-    @GetMapping("/secret")
+    @GetMapping(value = "/secret", produces = MediaType.TEXT_HTML_VALUE)
     public String getSecretConfig() {
         return mongoUri;
     }
 
-    @GetMapping("/single/config/variable")
+    @GetMapping(value = "/single/config/variable", produces = MediaType.TEXT_HTML_VALUE)
     public String getSingleConfigVariable() {
         return variable0;
     }
 
-    @GetMapping("/batch/config/variables")
+    @GetMapping(value = "/batch/config/variables", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public BeanConfiguration.Variables getBatchConfigVariable() {
         return variables;
     }
 
-    @GetMapping("/reload/config/properties")
+    @GetMapping(value = "/reload/config/properties", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public BeanConfiguration.ReloadProperties getReloadConfigProperties() {
         return reloadProperties;
     }

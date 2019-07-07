@@ -20,5 +20,5 @@ spec:
               servicePort: 80
           - path: /gateway-service/?(.*)
             backend:
-                serviceName: gateway-service-svc
-                servicePort: 80
+              serviceName: gateway-service-svc
+              servicePort: 80

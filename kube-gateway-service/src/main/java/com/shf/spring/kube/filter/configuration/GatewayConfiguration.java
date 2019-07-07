@@ -1,7 +1,11 @@
 package com.shf.spring.kube.filter.configuration;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.shf.spring.kube.filter.factory.RequestAuthenticationGatewayFilterFactory;
+import com.shf.spring.kube.filter.factory.RequestAuthorizationGatewayFilterFactory;
+import lombok.Builder;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.cloud.gateway.filter.ratelimit.RedisRateLimiter;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -10,6 +14,8 @@ import org.springframework.data.redis.core.ReactiveRedisTemplate;
 import org.springframework.data.redis.core.script.DefaultRedisScript;
 import org.springframework.data.redis.core.script.RedisScript;
 import org.springframework.scripting.support.ResourceScriptSource;
+import org.springframework.security.jwt.crypto.sign.MacSigner;
+import org.springframework.security.jwt.crypto.sign.SignerVerifier;
 import org.springframework.validation.Validator;
 
 import java.util.List;
@@ -21,8 +27,11 @@ import java.util.List;
  * @Date: 2019/6/13 16:14
  */
 @Configuration
-public class GatewayRateLimiterConfiguration {
-    private static final String REDIS_RATE_LIMITER_SCRIPT="new_redisRequestRateLimiterScript";
+public class GatewayConfiguration {
+    private static final String REDIS_RATE_LIMITER_SCRIPT = "new_redisRequestRateLimiterScript";
+
+    @Autowired
+    private ObjectMapper objectMapper;
 
     /************************replace default script(tokenbucket_request_rate_limiter.lua)******************************/
     @Bean(REDIS_RATE_LIMITER_SCRIPT)
@@ -42,6 +51,19 @@ public class GatewayRateLimiterConfiguration {
         return new RedisRateLimiter(redisTemplate, redisScript, validator);
     }
 
+    @Bean
+    public RequestAuthenticationGatewayFilterFactory authenticationGatewayFilterFactory() {
+        return new RequestAuthenticationGatewayFilterFactory(objectMapper, signerVerifier());
+    }
 
+    @Bean
+    public RequestAuthorizationGatewayFilterFactory requestAuthorizationGatewayFilterFactory(){
+        return new RequestAuthorizationGatewayFilterFactory(objectMapper, signerVerifier());
+    }
+
+    @Builder
+    public SignerVerifier signerVerifier() {
+        return new MacSigner("123");
+    }
 
 }
