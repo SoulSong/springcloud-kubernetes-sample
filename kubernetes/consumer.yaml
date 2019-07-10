@@ -64,6 +64,10 @@ spec:
                 secretKeyRef:
                   name: mongodb
                   key: database-password
+            - name: POD_IP
+              valueFrom:
+                fieldRef:
+                  fieldPath: status.podIP
           volumeMounts:
             - name: private-secret-volume
               readOnly: true
@@ -86,8 +90,12 @@ spec:
             httpGet:
               path: /manage/healthcheck
               port: http
-            initialDelaySeconds: 30
-            periodSeconds: 20
+              httpHeaders:
+                - name: X-Custom-Header
+                  value: Awesome
+            initialDelaySeconds: 40
+            periodSeconds: 10
+            timeoutSeconds: 2
           securityContext:
             # set the root path in container is readonly
             readOnlyRootFilesystem: true
@@ -95,6 +103,11 @@ spec:
             privileged: false
             runAsNonRoot: true
             runAsUser: 1000
+          lifecycle:
+            preStop:
+              exec:
+                command:
+                  - "curl -XPOST -H 'Content-Type: application/json' http://${POD_IP}:8081/manage/shutdown"
 ---
 apiVersion: v1
 kind: Service

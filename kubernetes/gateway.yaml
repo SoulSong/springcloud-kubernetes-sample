@@ -15,6 +15,10 @@ spec:
         app: gateway-service
         version: V1.0.0
     spec:
+      initContainers:
+        - name: init-redis
+          image: busybox:1.28
+          command: ['sh', '-c', 'until nslookup redis; do echo waiting for redis; sleep 2; done;']
       containers:
         - name: gateway-service
           image: local-dtr.com/kube-gateway-service:Develop
