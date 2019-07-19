@@ -370,4 +370,6 @@ http://shf.boot.com/gateway-service/swagger-ui.html
 ```
 ![avatar](./doc/img/k8s-gateway-swagger.jpg)
 
+> If you want to use swagger directly without the gateway-service. 
+PS add `springfox.documentation.swagger.v2.host=shf.boot.com/{ingress-router-path}` in the application's env.
 
