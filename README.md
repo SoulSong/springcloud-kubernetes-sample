@@ -32,6 +32,11 @@ Achieve distribute rate limiting by integrating spring-cloud-gateway with redis.
 ```text
 Contains all features shown as follow. 
 ```
+- Others
+  - alibaba-sentinel
+    ```text
+    Integrate with spring-cloud-alibaba-sentinel, only test in dev. Do not test in k8s.
+    ```
 
 ## Feature list:
 * Integrate spring-cloud-openfeign for native declarative request
