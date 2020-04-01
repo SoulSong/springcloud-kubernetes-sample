@@ -26,6 +26,12 @@
         </dependency>
 
         <dependency>
+            <groupId>com.alibaba.cloud</groupId>
+            <artifactId>spring-cloud-starter-alibaba-sentinel</artifactId>
+            <version>${spring-cloud-alibaba-version}</version>
+        </dependency>
+
+        <dependency>
             <groupId>com.shf.spring.kube</groupId>
             <artifactId>kube-common</artifactId>
         </dependency>

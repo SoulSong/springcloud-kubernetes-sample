@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 /**
  * @author songhaifeng
  */
-@RequestMapping(value = "/hello", produces = MediaType.TEXT_HTML_VALUE)
+@RequestMapping(value = "/hello")
 public interface HelloEndpoint {
 
     @GetMapping(value = "{name}")
@@ -17,4 +17,11 @@ public interface HelloEndpoint {
     @GetMapping(value = "call/producer-service", consumes = "application/json-v1")
     String call();
 
+    /**
+     * Test cpu limitation in k8s.
+     *
+     * @return number of cpu processor.
+     */
+    @GetMapping(value = "processor/number")
+    int getProcessorNumber();
 }
