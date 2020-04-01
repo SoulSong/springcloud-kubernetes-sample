@@ -46,6 +46,13 @@
             <version>2.10.2</version>
         </dependency>
 
+        <dependency>
+            <groupId>com.alibaba.csp</groupId>
+            <artifactId>sentinel-core</artifactId>
+            <version>1.7.0</version>
+            <scope>compile</scope>
+        </dependency>
+
     </dependencies>
 
     <build>

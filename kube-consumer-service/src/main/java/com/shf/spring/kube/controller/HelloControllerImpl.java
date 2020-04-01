@@ -32,4 +32,9 @@ public class HelloControllerImpl implements HelloEndpoint {
     public String call() {
         return String.format("Get response from producer-service : \"%s\"", producerClient.hello("anonymity"));
     }
+
+    @Override
+    public int getProcessorNumber() {
+        return Runtime.getRuntime().availableProcessors();
+    }
 }
