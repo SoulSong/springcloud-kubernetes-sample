@@ -34,6 +34,7 @@ It is an integration test.
 - https://www.baeldung.com/spring-security-custom-authentication-failure-handler
 - https://www.baeldung.com/sso-spring-security-oauth2
 - https://www.baeldung.com/spring-security-openid-connect
+- http://stytex.de/blog/2016/02/01/spring-cloud-security-with-oauth2/
 
 
 
