@@ -92,8 +92,8 @@ public class PasswordCredentialTest {
         assertEquals(HttpStatus.OK, response.getStatusCode());
 
         //checkToken
-        response = new RestTemplate().getForEntity("http://localhost:" + port + "/oauth/check_token?token=" +
-                new ObjectMapper().readValue(response.getBody(), HashMap.class).get("access_token"), String.class);
+        response = new RestTemplate().postForEntity("http://localhost:" + port + "/oauth/check_token?token=" +
+                new ObjectMapper().readValue(response.getBody(), HashMap.class).get("access_token"), null, String.class);
         assertEquals(HttpStatus.OK, response.getStatusCode());
 
         HashMap results = new ObjectMapper().readValue(response.getBody(), HashMap.class);

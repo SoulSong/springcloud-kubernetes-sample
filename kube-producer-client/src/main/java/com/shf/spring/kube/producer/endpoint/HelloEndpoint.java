@@ -11,6 +11,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @RequestMapping(value = "/call")
 public interface HelloEndpoint {
 
-    @GetMapping(value = "{name}", produces = MediaType.TEXT_HTML_VALUE)
+    @GetMapping(value = "/{name}", produces = MediaType.TEXT_HTML_VALUE)
     String hello(@PathVariable String name);
 }

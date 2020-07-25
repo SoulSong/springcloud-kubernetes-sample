@@ -7,16 +7,16 @@ import lombok.Builder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.cloud.gateway.filter.ratelimit.RedisRateLimiter;
+import org.springframework.cloud.gateway.support.ConfigurationService;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.io.ClassPathResource;
-import org.springframework.data.redis.core.ReactiveRedisTemplate;
+import org.springframework.data.redis.core.ReactiveStringRedisTemplate;
 import org.springframework.data.redis.core.script.DefaultRedisScript;
 import org.springframework.data.redis.core.script.RedisScript;
 import org.springframework.scripting.support.ResourceScriptSource;
 import org.springframework.security.jwt.crypto.sign.MacSigner;
 import org.springframework.security.jwt.crypto.sign.SignerVerifier;
-import org.springframework.validation.Validator;
 
 import java.util.List;
 
@@ -43,12 +43,11 @@ public class GatewayConfiguration {
         return redisScript;
     }
 
-
     @Bean
-    public RedisRateLimiter redisRateLimiter(ReactiveRedisTemplate<String, String> redisTemplate,
+    public RedisRateLimiter redisRateLimiter(ReactiveStringRedisTemplate redisTemplate,
                                              @Qualifier(REDIS_RATE_LIMITER_SCRIPT) RedisScript<List<Long>> redisScript,
-                                             Validator validator) {
-        return new RedisRateLimiter(redisTemplate, redisScript, validator);
+                                             ConfigurationService configurationService) {
+        return new RedisRateLimiter(redisTemplate, redisScript, configurationService);
     }
 
     @Bean
@@ -57,7 +56,7 @@ public class GatewayConfiguration {
     }
 
     @Bean
-    public RequestAuthorizationGatewayFilterFactory requestAuthorizationGatewayFilterFactory(){
+    public RequestAuthorizationGatewayFilterFactory requestAuthorizationGatewayFilterFactory() {
         return new RequestAuthorizationGatewayFilterFactory(objectMapper, signerVerifier());
     }
 

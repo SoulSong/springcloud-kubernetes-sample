@@ -11,9 +11,14 @@ There are two modules:
 
 #### clientId mode
 > curl -XPOST "trusted-app:secret@localhost:3000/oauth/token" -d "client_id=trusted-app&grant_type=client_credentials"
- 
+  
 ### check token
-> curl  "http://localhost:3000/oauth/check_token?token={access_token}"
+> curl -XPOST  "http://localhost:3000/oauth/check_token?token={access_token}"
+**OUTPUT**
+```text
+{"aud":["song"],"user_name":"foo1","scope":["webClient","appClient"],"organization":"foo-org","active":true,"exp":1595495794,"authorities":["Admin","User"],"jti":"BSzaBaYigrDGq5PhMYaU+Ti1OEE=","client_id":"
+trusted-app"}
+```
 
 ### refresh token
 > curl  -XPOST "trusted-app:secret@localhost:3000/oauth/token" -d "grant_type=refresh_token&refresh_token={refresh_token}
@@ -21,6 +26,10 @@ There are two modules:
 ## Authorization
 ### example
 > curl -H "Authorization:Bearer {access_token}" "http://localhost:3001/resource/authority_with_user"
+**OUTPUT**
+```text
+foo1
+```
 
 ## Others
 **There are full unit test cases for showing how it works.**
