@@ -81,14 +81,14 @@ spec:
               mountPath: "/tmp/app"
           readinessProbe:
             httpGet:
-              path: /manage/info
+              path: /manage/healthcheck/readinessState
               # use named port, same with pod:ports:name
               port: http
             initialDelaySeconds: 20
             periodSeconds: 10
           livenessProbe:
             httpGet:
-              path: /manage/healthcheck
+              path: /manage/healthcheck/livenessState
               port: http
               httpHeaders:
                 - name: X-Custom-Header

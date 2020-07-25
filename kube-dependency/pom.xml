@@ -145,6 +145,13 @@
                 </configuration>
             </plugin>
 
+            <!-- https://docs.spring.io/spring-boot/docs/2.3.0.BUILD-SNAPSHOT/reference/html/howto.html#howto-git-info -->
+            <!-- https://docs.spring.io/spring-boot/docs/2.3.0.BUILD-SNAPSHOT/reference/html/production-ready-features.html#production-ready-application-info -->
+            <plugin>
+                <groupId>pl.project13.maven</groupId>
+                <artifactId>git-commit-id-plugin</artifactId>
+            </plugin>
+
         </plugins>
     </build>
 
